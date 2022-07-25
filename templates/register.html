@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Edit my profil{% endblock %}
+{% block bodyId %}edit_profil{% endblock %}
+{% block headerContent %}<span id="logo" ></span>
+		<span id="menu_haut">
+			<button id="but_menu" title="Dashboard" >Dashboard</button>
+			<button id="but_logout" title="Sign out" >Sign out</button>
+		</span>{% endblock %}
+{% block content %}
+<div id="form_connexion">
+	<p><strong>Edit my profil :</strong></p>
+	<form method="post">{% csrf_token %}
+	{% if success %}
+		<p id="connect"><strong>{{ success }}</strong></p>
+	{% endif %}
+	{% if first_login %}
+	        <p id="deconnect"><strong>{{ first_login }}</strong></p>
+	{% endif %}
+	{% if form.non_field_errors %}
+	    {% for error in form.non_field_errors %}
+	        <p id="deconnect"><strong>{{ error|striptags }}</strong></p>
+	    {% endfor %}
+	{% endif %}
+	{% if form.username.errors %}
+	    {% for error in form.username.errors %}
+	        <p id="deconnect"><strong>{{ error|striptags }}</strong></p>
+	    {% endfor %}
+	{% endif %}
+	{% if form.email.errors %}
+	    {% for error in form.email.errors %}
+	        <p id="deconnect"><strong>{{ error|striptags }}</strong></p>
+	    {% endfor %}
+	{% endif %}
+	{% if form.password.errors %}
+		{% for error in form.password.errors %}
+	        <p id="deconnect"><strong>{{ error|striptags }}</strong></p>
+	    {% endfor %}
+	{% endif %}
+	<table align="center" style="width:100%">
+		<tr>
+			<td class="align_right" >User:</td>
+		  	<td>{{ form.username }}</td>
+		</tr>
+		<tr>
+			<td class="align_right" >Email:</td>
+		  	<td>{{ form.email }}</td>
+		</tr>
+		<tr>
+			<td class="align_right" >Password:</td>
+		  	<td>{{ form.password }}</td>
+		</tr>
+		<tr>
+			<td class="align_right" >Confirm password:</td>
+		  	<td>{{ form.password2 }}</td>
+		</tr>
+	</table>
+	<p><input type="submit" id="but_register" value="Save changes"</input></p>
+	</form>
+</div>
+{% endblock %}
+{% block js_additionnal_sources %}
+<script type="text/javascript" src="{% static 'js/nav.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Manage VPN config files{% endblock %}
+{% block bodyId %}vpn_conf{% endblock %}
+{% block headerContent %}<span id="logo" ></span>
+		<span id="menu_haut">
+			<button id="but_menu" title="Dashboard" >Dashboard</button>
+			<button id="but_logout" title="Sign out" >Sign out</button>
+		</span>{% endblock %}
+{% block content %}
+<div id="form_connexion">
+	{% if error %}
+		<p id="deconnect">{{error}}</p>
+	{% elif success %}
+		<p id="connect">{{success}}</p>
+	{% endif %}
+	 <form method="post" enctype="multipart/form-data" name="login_form" >{% csrf_token %}
+      <table align="center" >
+        {{ form.as_table }}
+      </table>
+      <p><input type="submit" id="but_connexion" value="Upload"/></p>
+    </form>
+</div>
+<br><br>
+<div id="form_connexion">
+	<p><strong>Available VPN configuration files :</strong></p>
+	<p><div id="controls_vpn" style="text-align: center" ></div></p>
+	<table id="tableau_vpn" style="width:100%">
+    </table>
+    <span id="info_vpn" ></span>
+</div>
+{% endblock %}
+{% block js_additionnal_sources %}
+<script type="text/javascript" src="{% static 'js/nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/managevpn.js' %}"></script>
+{% endblock %}

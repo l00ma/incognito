@@ -1,0 +1,32 @@
+{% load static %}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.10.4.custom.css' %}"/>
+		<title>Incognito - {% block title %}{% endblock %}</title>
+		<link rel="shortcut icon" type="image/png" href="{% static 'css/images/favicon.png' %}"/>
+	</head>
+	<body id="{% block bodyId %}genericPage{% endblock %}">
+		<header>
+		{% block headerContent %}
+		<span id="logo" ></span>
+		{% endblock %}
+		</header>
+		<section id="content">
+		{% block content %}{% endblock %}
+		</section>
+		<script type="text/javascript" src="{% static 'js/jquery-1.10.2.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery-ui-1.10.4.custom.min.js' %}"></script>
+		{% block js_additionnal_sources %}{% endblock %}
+		<script type="text/javascript">
+			$(document).ready (function(){
+				$("#logo").hide();
+				$("#logo").html('<img src="{% static "css/images/mustach5-48x48.png" %}" alt="L" height="48" width="48">&nbsp;&nbsp;Incognito');
+				$("#logo").effect("slide", { direction:"up", easing: "easeOutBounce" }, 1000);
+			});
+		</script>
+		{% block js_additionnal_scripts %}{% endblock %}
+	</body>
+</html>

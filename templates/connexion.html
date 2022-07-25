@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sign in{% endblock %}
+{% block bodyId %}login_page{% endblock %}
+
+{% block content %}
+	<div id="form_connexion">
+		<form method="post" name="login_form" action=".">{% csrf_token %}
+			{% if error %}
+				<p class="error"><strong>{{error}}</strong></p>
+			{% endif %}
+			<table align="center" >
+				{{ form.as_table }}
+			</table>
+			<p><input type="submit" id="but_connexion" value="Sign In"/></p>
+			{% if user.is_authenticated %}
+				<p id="connect" >You are <a href="/welcome">already logged in</a></p>
+			{% else %}
+				<p id="deconnect" >You are logged out. <a href="/password_reset/">Forgot password ?</a></p>
+			{% endif %}
+		</form>
+	</div>
+	<div id="image"></div>
+{% endblock %}

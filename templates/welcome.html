@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block bodyId %}dashboard{% endblock %}
+{% block headerContent %}<span id="logo" ></span>
+		<span id="menu_haut">
+			<button id="but_profil" title="Edit my profil" >Edit my profil</button>
+			<button id="but_logout" title="Sign out" >Sign out</button>
+		</span>{% endblock %}
+{% block content %}
+<nav>
+			<h2 align="center">Welcome to your dashboard {{ logged_user_name|title }}</h2>
+			<div id="myTabs" class="style-tabs">
+				<ul>
+				<!-- titres des onglets - voir http://www.webdeveasy.com/style-your-jquery-ui-tabs/ -->
+				<li><a href="#a"><div class="icon forward-icon">Forward<br>Connexion</div></a></li>
+				<li><a href="#b"><div class="icon openvpn-icon">OpenVPN<br>Tunnel</div></a></li>
+				<li><a href="#c"><div class="icon tortrans-icon">TOR<br>Proxy</div></a></li>
+				<li><a href="#d"><div class="icon toropenvpn-icon">OpenVPN<br>to TOR</div></a></li>
+				<li><a href="#e"><div class="icon settings-icon">Access Point<br>Settings</div></a></li>
+				<li><a href="#f"><div class="icon logfile-icon">Monitoring<br>and log</div></a></li>
+				</ul>
+				
+				<!-- Forward Connexion onglet -->
+				<div id="a">
+					<div id="container_1">
+						<input type="radio" name="connexion" id="connexion1" class="radio-box"/><label for="connexion1" class="radio-label">Forward Connexion</label>
+						<div class="subtitle_div" >Forward mode is the default mode when you connect for the first time or when you reset with default parameters.It's only forwarding your connexion so be carefull because it spread your real IP. Anonymity level is null !!
+						</div>
+					</div>
+				</div>
+				<!-- OpenVPN Connexion onglet-->
+				<div id="b">
+					<div id="container_1">
+						<input type="radio" name="connexion" id="connexion2" class="radio-box"/><label for="connexion2" class="radio-label">OpenVPN Tunnel</label>
+						<div class="subtitle_div" >This mode uses an OpenVPN third party in which you have to pay a subscribtion. Choose carefully your OpenVPN provider. Ensure you trust your OpenVPN provider. It mustn't have to log your browsing sessions (eg: mullvad.net, nordvpn.com, airvpn.org, www.expressvpn.com). In this mode your IP will be changed as if you're browsing from your OpenVPN provider server. Anonymity level is good with a trusted OpenVPN provider.
+						</div>
+						<table align="center" style="width:100%">
+						{% if vpn_conf_path %}
+							<tr>
+							<td>
+							<div class="dropdown">
+								<label for="pays">Choose your config file :</label>
+									<select name="pays" id="pays">
+									{% for file in vpn_conf_path %}
+									<option value="{{ file }}">{{ file|slice:"0:-5" }}</option>
+									{% endfor %}
+									</select>
+							</div>
+							</td>							
+							</tr>
+						{% else %}
+							<tr>
+								<td><font color="black"><p id='deconnect'>Upload at least one VPN config file. Click below.</font></p></td>							
+							</tr>
+						{% endif %}
+							<tr>
+								<td>
+									<div id="if_vpn_dns" style="text-align: center" >
+										<p><button id="but_confVPN">Manage VPN config files</button></p>
+									</div>
+								</td>	
+							</tr>
+						{% if vpn_conf_path %}
+							<tr>
+								<td>
+									<div id="if_vpn_dns" style="text-align: center" >
+										<br>
+										<p class="title">Optional feature: -Anti-DNS Leak-<p>
+										<p class="subtitle">Enter your VPN provider's DNS to avoid DNS leak</p>
+										<br>DNS n°1:&nbsp;<input type="text" id="vpn_dns1"/>
+										<div class="divider"></div>
+										DNS n°2:&nbsp;<input type="text" id="vpn_dns2" />
+										<p><button id="but_vpn_dns">Apply DNS for VPN</button></p>
+									</div>
+								</td>
+							</tr>
+						{% endif %}
+						</table>
+					</div>
+				</div>
+				<!-- TOR Proxy onglet -->
+				<div id="c">
+					<div id="container_1">
+						<input type="radio" name="connexion" id="connexion3" class="radio-box"/><label for="connexion3" class="radio-label">TOR Proxy</label>
+						<div class="subtitle_div" >TOR Proxy mode allows you to connect to TOR network in order to browse anonymously. You can then connect to hidden services (.onion websites). Your IP address will be frequently rotating througt TOR philosophy. If you use FireFox upper or equal to realese 45 to browse, ensure that option "network.dns.blockDotOnion" in "about:config" is set to "false" (see  <a href="https://protonmail.com/support/knowledge-base/firefox-onion-sites/" target="_blank">help here</a>), otherwise onion browsing wouldn't work. Anonymity level is good.</div>
+						<table align="center" >
+							<tr>
+								<td colspan="5"><p><button id="but_changeip1">Change Exit node</button></p>
+								</td>							
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- TOR over OpenVPN onglet -->
+				<div id="d">
+					<div id="container_1">
+						<input type="radio" name="connexion" id="connexion4" class="radio-box"/><label for="connexion4" class="radio-label">OpenVPN to TOR</label>
+						<div class="subtitle_div" >This mode uses two layers of anonymity: At first, an OpenVPN third party in which you have to pay a subscribtion. Choose carefully your OpenVPN provider. Ensure you trust your provider. It mustn't have to log your browsing sessions (eg: mullvad.net, nordvpn.com, airvpn.org, www.expressvpn.com). Your IP will be set as if you're browsing from your OpenVPN provider server. (NOTA: This mode uses the OpenVPN server selected in "OpenVPN Tunnel" tab) At second, your connexion will be routed to TOR network providing a new layer of anonymity. This feature allows you to reach hidden services (.onion websites). Your IP address will be frequently rotating through TOR philosophy. If you use FireFox (> or = to 45 rel.) to browse, ensure option "about:config/network.dns.blockDotOnion" is set to "false" (see  <a href="https://protonmail.com/support/knowledge-base/firefox-onion-sites/" target="_blank">help here</a>), otherwise onion browsing wouldn't work. Anonymity level is very good if you use a trusted OpenVPN provider.
+						</div>
+						<table align="center" >
+							<tr>
+								<td colspan="5"><p><button id="but_changeip2">Change Exit node</button></p>
+								</td>							
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- Settings onglet -->
+				<div id="e">
+					<div id="container_1">
+						<table class="tour_table" align="center" >
+							<tr>
+								<td colspan="5" align="center"><span class="title">Access Point settings</span></td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center">Access Point SSID <sup title="Required">*</sup>: <input type="text" id='ap_ssid_value'/><input type="checkbox" id="show_password" />Show password
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" class="hide" >Access Point WPA Password <sup title="Required">*</sup>: <input type="text" id='ap_pwd_value'/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center">Access Point IP <sup title="Required">*</sup>: 192.168.<input type="text" id='ap_ip1_value'/>.<input type="text" id='ap_ip2_value'/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center">Channel <sup title="Required">*</sup>:<select id='ap_channel_value'>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+										<option value="13">13</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center"><div id="required">(*): required field</div><br><br></td>
+							</tr>
+						</table>
+						<table class="tour_table" align="center" >
+							<tr>
+								<td colspan="5" align="center"><span class="title">DHCP settings</span></td>
+							</tr>
+							<tr>
+								<td colspan="5">DHCP range - start <sup title="Required">*</sup>:<input type="text" id='ap_dhcpstart_value'/>&nbsp;&nbsp;&nbsp;&nbsp;
+									end <sup title="Required">*</sup>:<input type="text" id='ap_dhcpend_value'/>
+							</tr>
+							<tr>
+								<td colspan="5" align="center"><div id="required">(*): required field</div><br><br></td>
+							</tr>
+						</table>
+						<table class="tour_table" align="center" >
+							<tr>
+								<td colspan="5" align="center"><span class="title">MAC addresses reservation</span></td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td>
+									<span class="subtitle">Hostname</span>
+								</td>
+								<td>
+									<span class="subtitle">MAC address</span>
+								</td>
+								<td>
+									<span class="subtitle">Ip</span>
+								</td>
+								<td>
+									<span class="subtitle">Clear</span>
+								</td>
+							</tr>
+							<tr>
+								<td>MAC Reservation 1:</td>
+								<td><input type="text" id='host1'/></td>
+								<td><input type="text" id='mac1'/></td>
+								<td><span id='prefix_ip'></span><input type="text" id='reserved_ip1'/></td>
+								<td><button id="but_supprimer1">x</button></td>
+							</tr>
+							<tr>
+							    <td>MAC Reservation 2:</td>
+								<td><input type="text" id='host2'/></td>
+								<td><input type="text" id='mac2'/></td>
+								<td><span id='prefix_ip'></span><input type="text" id='reserved_ip2'/></td>
+								<td><button id="but_supprimer2">x</button></td>
+							</tr>
+							<tr>
+								<td>MAC Reservation 3:</td>
+								<td><input type="text" id='host3'/></td>
+								<td><input type="text" id='mac3'/></td>
+								<td><span id='prefix_ip'></span><input type="text" id='reserved_ip3'/></td>
+								<td><button id="but_supprimer3">x</button></td>
+							</tr>
+							<tr>
+							    <td>MAC Reservation 4:</td>
+								<td><input type="text" id='host4'/></td>
+								<td><input type="text" id='mac4'/></td>
+								<td><span id='prefix_ip'></span><input type="text" id='reserved_ip4'/></td>
+								<td><button id="but_supprimer4">x</button></td>
+							</tr>
+							<tr>
+							    <td>MAC Reservation 5:</td>
+								<td><input type="text" id='host5'/></td>
+								<td><input type="text" id='mac5'/></td>
+								<td><span id='prefix_ip'></span><input type="text" id='reserved_ip5'/></td>
+								<td><button id="but_supprimer5">x</button></td>
+							</tr>
+						</table>
+						<br><br>
+						<table class="tour_table" align="center">
+							<tr>
+								<td colspan="5" align="center"><span class="title">DNS settings</span></td>
+							</tr>
+							<td>
+								</td>
+								<td>
+									<span class="subtitle">DNS Ip</span>
+								</td>
+							<tr>
+								<td>DNS 1 <sup title="Required">*</sup>:</td>
+								<td><input type="text" id='dns1'/></td>
+								<td><button id="but_del_dns1">x</button></td>
+							</tr>
+							<tr>
+							    <td>DNS 2 <sup title="Required">*</sup>:</td>
+								<td><input type="text" id='dns2'/></td>
+								<td><button id="but_del_dns2">x</button></td>
+							</tr>
+							<tr>
+								<td>DNS 3:</td>
+								<td><input type="text" id='dns3'/></td>
+								<td><button id="but_del_dns3">x</button>
+							</tr>
+							<tr>
+								<td colspan="5" align="center"><div id="required">(*): required field</div><br><br></td>
+							</tr>
+						</table>
+
+						<table class="tour_table" align="center">
+							<tr>
+								<td colspan="5" align="center"><span class="title">Network routes</span></td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td>
+									<span class="subtitle">Network to reach</span>
+								</td>
+								<td>
+									<span class="subtitle">Mask</span>
+								</td>
+								<td>
+									<span class="subtitle">Gateway</span>
+								</td>
+								<td>
+									<span class="subtitle">Clear</span>
+								</td>
+							</tr>
+							<tr>
+								<td>Route 1:</td>
+								<td><input type="text" id='route_reach1'/></td>
+								<td>
+									<select id='route_mask1'>
+										<option value="24">/24</option>
+										<option value="32">/32</option>
+									</select>
+								</td>
+								<td><input type="text" id='route_gateway1'/></td>
+								<td><button id="but_del_route1">x</button></td>
+							</tr>
+							<tr>
+							    <td>Route 2:</td>
+								<td><input type="text" id='route_reach2'/></td>
+								<td>
+									<select id='route_mask2'>
+										<option value="24">/24</option>
+										<option value="32">/32</option>
+									</select>
+								</td>
+								<td><input type="text" id='route_gateway2'/></td>
+								<td><button id="but_del_route2">x</button></td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center"><br><br></td>
+							</tr>						
+						</table>
+						<table class="tour_table" align="center">
+							<tr>
+								<td colspan="5" align="center"><span class="title">Adblock filter</span></td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center">Active adblock <input type="checkbox" id='ap_adblock' name="ad_block"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5"><p><button id="but_adupdate">Update list</button></p><br><br>
+								</td>							
+							</tr>
+						</table>
+						<table class="tour_table" align="center" >
+							<tr>
+								<td colspan="5" align="center"><span class="title">System control</span></td>
+							</tr>
+							<tr>
+								<td colspan="5" align="right">Reboot with current parameters <input type="checkbox" id='ap_reboot' name="reboot"/><br>Reset to default parameters <input type="checkbox" id='ap_reset' name="reset"/><br>Stop the box <input type="checkbox" id='ap_stop' name="stop"/><br><br><br>
+								</td>
+							</tr>
+						</table>
+						<table class="tour_table" align="center" >
+							<tr>
+								<td colspan="5"><p><button id="but_modifier">Save</button></p>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- log file onglet -->
+				<div id="f">
+					<div id="container_2">
+						<span class="title">Monitoring</span>
+						<table style="width:100%" class="subtitle_div" >
+							<tr>
+								<td class="align_right">Ethernet IP (WAN):</td>
+								<td class="align_left" id='eth_ip'></td>
+								<td class="align_right">Wifi IP (LAN):</td>
+								<td class="align_left" id='wlan_ip'></td>
+							</tr>
+							<tr>
+								<td class="align_right">Ethernet MAC (WAN):</td>
+								<td class="align_left" id='eth_mac'></td>
+								<td class="align_right">Wifi MAC (LAN):</td>
+								<td class="align_left" id='wlan_mac'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_right">Received datas:</td>
+								<td class="align_left" id='rec_dat'></td>
+								<td class="align_right">Sent datas:</td>
+								<td class="align_left" id='sen_dat'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_right">Incoming datas:</td>
+								<td class="align_left" id='in_dat'></td>
+								<td class="align_right">Outgoing datas:</td>
+								<td class="align_left" id='out_dat'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_right">Uptime:</td>
+								<td class="align_left" id='up_tim'></td>
+								<td class="align_right">Internal temp:</td>
+								<td class="align_left" id='int_temp'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_right">Load average:</td>
+								<td id='load1'></td>
+								<td id='load5'></td>
+								<td id='load15'></td>
+							</tr>
+							<tr>
+								<td class="align_right">Disc usage:</td>
+								<td id='tot_space'></td>
+								<td id='free_space'></td>
+								<td id='free_percent'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_right">Clients lease:</td>
+								<td colspan="2" class="align_left" id='conn_client'></td>
+							</tr>
+							<tr height="10">
+							</tr>
+							<tr>
+								<td class="align_left" id='openvpn_ver'></td>
+							</tr>
+							<tr>
+								<td class="align_left" id='tor_ver'></td>
+							</tr>
+						</table>
+						<span class="title">Log file</span>
+						<textarea style="width:99%" id="logfile" rows="17" readonly>
+						</textarea>
+					</div>
+					<div id="set_log">
+						<select id="select_log">
+						  <option value="0">0 - No log</option> 
+						  <option value="1">1 - Minimal log</option>
+						  <option value="2">2 - Verbose log</option>
+						</select>
+						<button id="but_log">Delete log</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<aside>
+			<p id="heure"></p>
+			<p id="wan_ip"></p>
+			<p id="actual_ip"></p>
+			<p id="mode"></p>
+			<p id="vpn_conf"></p>
+		</aside>
+		<div id="notification"></div>
+{% endblock %}
+{% block js_additionnal_sources %}
+<script type="text/javascript" src="{% static 'js/nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/welcome.js' %}"></script>
+{% endblock %}
+{% block js_additionnal_scripts %}
+<script  type="text/javascript">
+		$(function() {
+			$( "#myTabs" ).tabs();
+			$( document ).tooltip();
+		});
+</script>
+{% endblock %}

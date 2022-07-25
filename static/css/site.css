@@ -1,0 +1,458 @@
+@font-face {
+ font-family: 'pincoyablack';
+ src: url('fonts/pincoyablack-webfont.eot');
+ src: url('fonts/pincoyablack-webfont.eot?#iefix') format('embedded-opentype'),
+	url('fonts/pincoyablack-webfont.woff') format('woff'),
+	url('fonts/pincoyablack-webfont.ttf')  format('truetype'),
+	url('fonts/pincoyablack-webfont.svg#svgFontName') format('svg');
+}
+
+body {
+ background-color: #E2E2E2;
+
+ font-family: Trebuchet, Arial, sans-serif;
+ color: #787878;
+ font-size: 0.9em;
+}
+
+#image{
+    content:url(/static/css/images/monocle_guy.png);
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    width: 400px;
+    height: 450px;
+    opacity: 0.7;
+    z-index: -1;
+}
+
+#page_welcome {
+ font-family: Trebuchet, Arial, sans-serif;
+ color: #727272;
+ font-size: 0.9em;
+}
+
+/*erreur*/
+.error { 
+ color: red;
+ font-weight: bold;
+ font-size: 0.9em;
+}
+
+header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height:51px;
+ background: #f7f7f7;
+ border-bottom: 1px solid #989898;
+ z-index: 2;
+}
+
+#tableau_vpn td {
+ text-align: center;
+ vertical-align: middle;
+}
+
+#menu_haut {
+ position: fixed;
+ right: 0;
+ margin-right: 3px;
+ margin-top: 8px;
+}
+
+#logo {
+ font-family: 'pincoyablack';
+ font-size: 60px;
+ color: #000; 
+ position: fixed;
+ left: 0;
+ margin-left: 10px;
+ margin-top: -10px;
+ opacity: 0.7;
+}
+
+#logo img {
+ position: relative;
+ top: 2px;
+}
+
+
+* [id^='but_'], #select_log, aside, nav {
+ position: relative;
+ top: 2px;
+ -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+ -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+ box-shadow: inset 0px 1px 0px 0px #ffffff;
+ background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+ background: -moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+ background-color: #ededed;
+ text-indent: 0;
+ border: 1px solid #dcdcdc;
+ display: inline-block;
+ color: #777777;
+ font-size: 0.7em;
+ font-weight: bold;
+ height: 32px;
+ text-decoration: none;
+ text-align: center;
+}
+
+* [id^='but_supprimer'], [id^='but_del_dns'], [id^='but_del_route'] {
+ height: 20px;
+ line-height: 15px;
+}
+
+* [id^='but_'], aside, nav, .notice {
+ -webkit-border-top-left-radius: 3px;
+ -moz-border-radius-topleft: 3px;
+ border-top-left-radius: 3px;
+ -webkit-border-top-right-radius: 3px;
+ -moz-border-radius-topright: 3px;
+ border-top-right-radius: 3px;
+ -webkit-border-bottom-right-radius: 3px;
+ -moz-border-radius-bottomright: 3px;
+ border-bottom-right-radius: 3px;
+ -webkit-border-bottom-left-radius: 3px;
+ -moz-border-radius-bottomleft: 3px;
+ border-bottom-left-radius: 3px;
+}
+
+*[id^='but_']:hover {
+ background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+ background: -moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+ background-color: #dfdfdf;
+}
+
+*[id^='but_']:active  {
+ position: relative;
+ top: 1px;
+}
+
+aside {
+ position: fixed;
+ top: 60px;
+ right: 5px;
+ width: auto;
+ height: auto;
+ padding: 5px 15px 5px 15px;
+ font-weight: normal;
+ opacity: 0.8;
+}
+
+nav {
+ position: absolute;
+ top: 60px;
+ left: 0px;
+ width: auto;
+ height: auto;
+ padding: 5px 10px 5px 10px;
+ font-weight: normal;
+ font-size: 1em;
+ text-align: left;
+ opacity: 0.8;
+}
+
+nav h1 {
+ font-size: 2.3em;
+ text-align: center;
+}
+
+nav p {
+ font-size: 1.3em;
+}
+
+sup , #required {
+ color: red;
+ font-weight: bold;
+}
+
+#required {
+ font-size: 0.7em;
+ padding: 10px 0 0 0;
+}
+
+a:link, a:visited {
+ color: #727272;
+ text-decoration: none;
+}
+
+a:hover, a:active {
+ color: #727272;
+ text-decoration: underline;
+}
+
+#myTabs {
+ width: 710px;
+}
+
+.style-tabs .ui-tabs-nav li .icon { 
+    color: #787878;
+    background-position: center 3px;
+    padding-top: 40px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    width: 80px;
+}
+
+.forward-icon { background: url(images/forward_tab.png) no-repeat; height: 32px; width: 32px; }
+.openvpn-icon { background: url(images/openvpn_tab.png) no-repeat; height: 32px; width: 32px; }
+.tortrans-icon { background: url(images/tor_tab.png) no-repeat; height: 32px; width: 32px; }
+.toropenvpn-icon { background: url(images/torovpn_tab.png) no-repeat; height: 32px; width: 32px; }
+.settings-icon { background: url(images/settings_tab.png) no-repeat; height: 32px; width: 32px; }
+.logfile-icon { background: url(images/log_tab.png) no-repeat; height: 32px; width: 32px; }
+
+#but_connexion, #but_modifier, #but_adupdate {
+ font-size: 16px;
+ height: 30px;
+ width: 120px;
+}
+
+#but_confVPN, #but_changeip1, #but_changeip2{
+ font-size: 16px;
+ height: 30px;
+ width: 220px;
+}
+
+#but_vpn_dns {
+ font-size: 16px;
+ height: 30px;
+ width: 220px;
+}
+
+#but_supprimer {
+ font-size: 12px;
+ height: 20px;
+ width: 20px;
+}
+
+.divider {
+    width:25px;
+    height:auto;
+    display:inline-block;
+}
+
+.dropdown {
+    display:inline-block;
+}
+
+#form_connexion {
+ position: relative;
+ margin-left: auto;
+ margin-right: auto;
+ background: #C0BEBE;
+ padding: 20px;
+ width: 550px;
+ top: 100px;
+}
+
+*/
+#form_connexion td { 
+ vertical-align: text-bottom;
+}
+
+#form_connexion p, #form_connexion h3 {
+ text-align: center;  
+}
+
+#connect, #deconnect {
+ font-size: 0.6em;
+ font-weight: bold;
+ line-height: 20px;
+}
+
+#connect {
+ background: #c9f7b8;
+}
+
+#deconnect {
+ background: #f29999;
+}
+
+#container_1, #container_2 {
+ width: 100%; 
+ font: bold 10px;
+ color: #999999; 
+ padding: 5px 5px 5px 5px; 
+ margin: 0 10px 15px 0; 
+ background: #f7f7f7; 
+ border: 1px solid #dcdcdc; 
+ border-radius: 6px;
+}
+
+#container_2 {
+ text-align: center;
+}
+
+#container_1 label {
+ float: left;
+ text-align: right; 
+ margin: 0 30px 16px 0; 
+ clear: left; 
+}
+
+#myTabs td {
+ vertical-align: top;
+}
+
+.glowing-border {
+ height: 22px;
+ border: 1px solid #999999;
+}
+
+.glowing-border:focus { 
+ outline: none;
+ border-color: #999999;
+ box-shadow: 0 0 10px #999999;
+}
+
+.glowing-border, #form_connexion, #connect, #deconnect {
+ -webkit-border-top-left-radius: 3px;
+ -moz-border-radius-topleft: 3px;
+ border-top-left-radius: 3px;
+ -webkit-border-top-right-radius: 3px;
+ -moz-border-radius-topright: 3px;
+ border-top-right-radius: 3px;
+ -webkit-border-bottom-right-radius: 3px;
+ -moz-border-radius-bottomright: 3px;
+ border-bottom-right-radius: 3px;
+ -webkit-border-bottom-left-radius: 3px;
+ -moz-border-radius-bottomleft: 3px;
+ border-bottom-left-radius: 3px;
+}
+
+sup {
+ font-size: 12px;
+ color: #777777;
+}
+
+.horloge_heure
+{
+ font-size: 42px;
+}
+
+.horloge_date
+{
+ font-size: 25px;
+}
+
+.donnees_de_bord
+{
+ font-size: 24px;
+}
+
+.title {
+ font-size: 1em;
+ font-weight:bold;
+ padding-bottom: 10px;
+}
+
+.subtitle, .subtitle_div {
+ font-size: 0.7em;
+}
+
+.subtitle_div {
+ padding-top: 40px;
+ padding-bottom: 40px;
+}
+
+.tour_table {
+ border: 0px solid #000000;
+}
+
+/* boutons effets */
+input[type=radio].radio-box {
+ position: absolute; 
+ z-index: -1000; 
+ left: -1000px; 
+ overflow: hidden;
+ clip: rect(0 0 0 0); 
+ height: 1px; 
+ width: 1px; 
+ margin: -1px; 
+ padding: 0; 
+ border: 0;
+}
+
+input[type=radio].radio-box + label.radio-label {
+ padding-left: 21px;
+ height: 16px; 
+ display: inline-block;
+ line-height: 16px;
+ background-repeat: no-repeat;
+ background-position: 0 0;
+ font-size: 16px;
+ vertical-align: middle;
+ cursor: pointer;
+}
+
+input[type=radio].radio-box:checked + label.radio-label {
+ background-position: 0 -16px;
+}
+
+label.radio-label {
+ background-image:url("images/radio.png");
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+}
+
+#notification {
+position: fixed;
+bottom: 0;
+right: 0;
+width: 450px;
+z-index: 10;
+}
+
+.notice {
+position: relative;
+min-height: 40px;
+padding: 5px;
+border: 1px solid #dcdcdc;
+}
+
+.skin {
+position: absolute;
+background-color: #f7f7f7;
+bottom: 0;
+left: 0;
+opacity: 0.6;
+right: 0;
+top: 0;
+z-index: -1;
+}
+
+.close {
+background: transparent url('images/button-close.png') 0 0 no-repeat;
+text-indent: -9999px;
+position: absolute;
+top: 15px;
+right: 10px;
+width: 26px;
+height: 26px;
+}
+
+#notification p {
+  background: inherit;
+}
+
+#logfile {
+ font-size: 0.7em;
+ resize: none;
+}
+
+.align_right {
+ text-align: right;
+}
+
+.align_left {
+ text-align: left;
+}
