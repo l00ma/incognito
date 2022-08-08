@@ -1,6 +1,6 @@
 # incognito (Raspberry Pi based router)<br />
 <br />
-A complete router with a graphic manager designed for Raspberry Pi :<br />
+A complete router with web based manager designed for Raspberry Pi :<br />
 <br />
 Features:<br />
 -Wireless Access point<br />
